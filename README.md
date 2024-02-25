@@ -17,8 +17,11 @@
 * this project use pnpm
 * to install pnpm:
 * npm install -g pnpm
-* now run the project: 
-* pnpm dev
+* install dependencies: 
+* pnpm i (pnpm istall)
+* now run the project: pnpm dev 
+* or run pnpm i && pnpm dev  🚀 🚀 
+  
 
 ### 📖 tech debts and Todo
 * Add and confifure graphql/codegen to automatically creates TypeScript type definitions corresponding to GraphQL queries, mutations, and subscriptions, ensuring type safety
