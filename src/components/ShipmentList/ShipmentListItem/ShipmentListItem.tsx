@@ -1,33 +1,36 @@
 import { Box, Tag, TagLabel, Text } from "@chakra-ui/react";
 import type { Shipment } from "../../../types/types";
+import { formatTime } from '../../../utils/main';
 
 interface IShipmentListItemProps extends Shipment {
-    // handleItemClick: (itemId: number) => void
+    onItemClick: (shipment: Shipment) => void
 }
 
 export function ShipmentListItem(props: IShipmentListItemProps) {
-    const formatDateTime = (data: string) => {
-        const formatedDate = new Date(data).toLocaleDateString("en-GB", {
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-        });
-        return formatedDate;
-    };
+    const { onItemClick, ...rest } = props;
+    const shipmentData = rest;
+    const { trackingId, lastUpdate, status } = shipmentData;
 
-    const { trackingId, lastUpdate, status } = props;
+    const format = {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+    } as Intl.DateTimeFormatOptions;
 
     return (
         <Box
-            className="flex items-center px-5 py-3 border-t justify-start gap-[140px]"
+            className="flex items-center px-5 py-3 border-t justify-start gap-[150px] cursor-pointer"
             role="listitem"
+            onClick={() => {
+                onItemClick(shipmentData)
+            }}
         >
             <Box>
                 <Text fontSize="sm" fontWeight={500} color="black">
                     {trackingId}
                 </Text>
                 <Text fontSize="xs" color="gray">
-                    Created: {formatDateTime(lastUpdate)}
+                    Created: {formatTime(lastUpdate, format)}
                 </Text>
             </Box>
             <Tag

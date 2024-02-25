@@ -4,14 +4,19 @@ import { ArrowUpDownIcon } from "@chakra-ui/icons";
 import useGetShipmentData from "../../hooks/useGetShipmentData";
 import { Spinner } from "@chakra-ui/react";
 import ShipmentListItem from './ShipmentListItem';
+import type { Shipment } from '../../types/types';
+
 
 enum SortStatusTypeEnum {
     Default = 'default',
     Increase = 'increase',
     Decrease = 'decrease'
 }
+interface IShipmentListProp {
+    onListItemClick: (shipment: Shipment) => void
+}
 
-export function ShipmentList() {
+export function ShipmentList({ onListItemClick }: IShipmentListProp) {
     const { loading, error, shipmentsListData } = useGetShipmentData();
     const toast = useToast();
 
@@ -68,6 +73,7 @@ export function ShipmentList() {
         setSortedShipmentsList(initListData)
 
     }, [shipmentsListData, sortByDate, sortByStatus])
+
 
     useEffect(() => {
         if (sortByDate !== SortStatusTypeEnum.Default) {
@@ -126,8 +132,11 @@ export function ShipmentList() {
 
     return (
         <Box bg="white" className="rounded-md w-full">
-            <Box className="px-5 flex items-center gap-[186px]">
-                <Button onClick={handleSortByDate} className="!px-0" variant='ghost'>
+            <Box className="px-3 flex items-center gap-[186px]">
+                <Button
+                    onClick={handleSortByDate}
+                    className="!px-2"
+                    variant='ghost'>
                     <Text fontSize="sm" color="black" fontWeight="400">
                         Shipment
                     </Text>
@@ -141,7 +150,7 @@ export function ShipmentList() {
                 <Button
                     onClick={handleSortByStatus}
                     variant='ghost'
-                    className="!px-0"
+                    className="!px-2"
                 >
                     <Text fontSize="sm" color="black" fontWeight="400" >
                         Status
@@ -155,7 +164,7 @@ export function ShipmentList() {
                 </Button>
             </Box>
             {listData.map((shipmentItem) => (
-                <ShipmentListItem key={shipmentItem.id} {...shipmentItem} />
+                <ShipmentListItem key={shipmentItem.id} {...shipmentItem} onItemClick={onListItemClick} />
             ))}
         </Box>
     );

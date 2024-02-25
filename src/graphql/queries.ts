@@ -15,6 +15,20 @@ const SHIPMENTS = gql`
   }
 `;
 
+const TRACKING_EVENTS = gql`
+  query TrackingEvents($trackingId: String!) {
+    trackingEvents(trackingId: $trackingId) {
+      id
+      trackingId
+      status
+      statusSeverity
+      timestamp
+      location
+    }
+  }
+`;
+
 export {
-    SHIPMENTS
+    SHIPMENTS,
+    TRACKING_EVENTS
 }

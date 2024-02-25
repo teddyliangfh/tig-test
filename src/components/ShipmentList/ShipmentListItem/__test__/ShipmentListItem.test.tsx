@@ -15,14 +15,16 @@ describe('ShipmentListItem component', () => {
       totalTransit: '2 days'
     };
 
-    render(<ShipmentListItem {...shipmentData} />);
+    const mockOnListItemClick = jest.fn();
+
+    render(<ShipmentListItem {...shipmentData} onItemClick={mockOnListItemClick} />);
 
     //render the id correctly
     const trackingIdElement = screen.getByText('SHP-12345');
     expect(trackingIdElement).toBeTruthy();
 
     // render the date correctly
-    const lastUpdateElement = screen.getByText(/Created: 21 Oct 2023/i);
+    const lastUpdateElement = screen.getByText(/Created: Oct 21 2023/i);
     expect(lastUpdateElement).toBeTruthy();
 
     // render the status correctly

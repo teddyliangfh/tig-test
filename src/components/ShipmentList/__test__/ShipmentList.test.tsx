@@ -32,9 +32,11 @@ jest.mock('../../../hooks/useGetShipmentData', () => {
   }));
 });
 
+const mockOnListItemClick = jest.fn();
+
 describe('ShipmentList component', () => {
   test('displays list items when data is loaded successfully', async () => {
-    render(<ShipmentList />);
+    render(<ShipmentList onListItemClick={mockOnListItemClick} />);
     //render the list
     await waitFor(() => {
       expect(screen.getByText(/SHP-12345/i)).toBeTruthy();
@@ -42,12 +44,11 @@ describe('ShipmentList component', () => {
   });
 
   test('sorts list items by date when sort by date button is clicked', async () => {
-    render(<ShipmentList />);
+    render(<ShipmentList onListItemClick={mockOnListItemClick} />);
 
     const sortByDateButton = screen.getByText(/Shipment/i);
     sortByDateButton.click();
 
-    // test sort by data
     await waitFor(() => {
       const listItems = screen.getAllByRole(`listitem`);
       const firstItemText = listItems[0].textContent;
@@ -56,12 +57,11 @@ describe('ShipmentList component', () => {
   });
 
   test('sorts list items by status when sort by status button is clicked', async () => {
-    render(<ShipmentList />);
+    render(<ShipmentList onListItemClick={mockOnListItemClick} />);
 
     const sortByStatusButton = screen.getByText('Status');
     sortByStatusButton.click();
 
-    // test sort by status
     await waitFor(() => {
       const listItems = screen.getAllByRole('listitem');
       const firstItemText = listItems[0].textContent;
